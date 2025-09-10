@@ -1,3 +1,33 @@
+# Node
 node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
 
+# Build
+dist
+.tmp
+.cache
+
+# Prisma
 /generated/prisma
+
+# Dotenv
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Docker
+docker-data
+
