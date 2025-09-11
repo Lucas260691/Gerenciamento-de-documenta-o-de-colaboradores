@@ -6,3 +6,40 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+model Employee {
+  id        String            @id @default(uuid())
+  name      String
+  cpf       String            @unique
+  hiredAt   DateTime
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  documents EmployeeDocument[]
+}
+
+model DocumentType {
+  id        String            @id @default(uuid())
+  name      String            @unique
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  documents EmployeeDocument[]
+}
+
+model EmployeeDocument {
+  id             String         @id @default(uuid())
+  fileName       String?
+  status         DocumentStatus @default(PENDING)
+  employeeId     String
+  documentTypeId String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  employee       Employee       @relation(fields: [employeeId], references: [id])
+  documentType   DocumentType   @relation(fields: [documentTypeId], references: [id])
+}
+
+enum DocumentStatus {
+  PENDING
+  SENT
+}
