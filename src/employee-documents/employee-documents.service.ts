@@ -108,6 +108,10 @@ export class EmployeeDocumentsService {
 
     if (!employee) throw new NotFoundException('Employee not found');
 
+    if (!employee.documents || employee.documents.length === 0) {
+      throw new BadRequestException('No document types available to link');
+    }
+
     return {
       employeeId: employee.id,
       name: employee.name,
