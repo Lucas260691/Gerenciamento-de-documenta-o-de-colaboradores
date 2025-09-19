@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Param, Get, Query } from '@nestjs/common';
 import { EmployeeDocumentsService } from './employee-documents.service';
 import type { LinkDocumentsDto } from './dto/link-documents.dto';
-import * as uploadDocumentDto from './dto/upload-document.dto';
+import type { UploadDocumentDto } from './dto/upload-document.dto';
 
 @Controller('employee-documents')
 export class EmployeeDocumentsController {
@@ -17,15 +17,10 @@ export class EmployeeDocumentsController {
     return this.service.unlinkDocuments(dto);
   }
 
-  @Post(':employeeId/:documentTypeId/upload')
-  upload(
-    @Param('employeeId') employeeId: string,
-    @Param('documentTypeId') documentTypeId: string,
-    @Body() dto: uploadDocumentDto.UploadDocumentDto,
-  ) {
-    return this.service.uploadDocument(employeeId, documentTypeId, dto);
+  @Post('upload')
+  upload(@Body() dto: UploadDocumentDto) {
+    return this.service.uploadDocument(dto.employeeId, dto.documentTypeId, dto);
   }
-
   @Get('status/:employeeId')
   status(@Param('employeeId') employeeId: string) {
     return this.service.getStatus(employeeId);
